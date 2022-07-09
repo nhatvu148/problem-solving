@@ -16,8 +16,39 @@ import (
  * The function accepts chan bool ready as a parameter.
  */
 
-func TCPServer(ready chan bool) {
+func reverse(str string) (result string) {
+	for _, v := range str {
+		result = string(v) + result
+	}
+	return
+}
 
+func TCPServer(ready chan bool) {
+	listener, err := net.Listen("tcp", address)
+	if err != nil {
+		panic(err)
+	}
+	defer listener.Close()
+	ready <- true
+
+	for {
+		conn, err := listener.Accept()
+		if err != nil {
+			panic(err)
+		}
+
+		for {
+			bs := make([]byte, maxBufferSize)
+			n, err := conn.Read(bs)
+			if err != nil {
+				break
+			}
+			_, err = conn.Write([]byte(reverse(string(bs[:n]))))
+			if err != nil {
+				break
+			}
+		}
+	}
 }
 
 const maxBufferSize = 1024
