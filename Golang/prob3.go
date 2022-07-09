@@ -19,6 +19,40 @@ import (
  *  2. chan int resultChan
  */
 
+const MOD = (1e9 + 7);
+
+// https://www.geeksforgeeks.org/modulo-power-for-large-numbers-represented-as-strings/
+func powerLL(x, n int) int {
+        result := 1;
+    for n > 0 {
+        if n % 2 == 1 {
+            result = result * x % MOD
+        }
+        n = n / 2;
+        x = x * x % MOD
+    }
+    return result
+}
+
+func powerStrings(sa, sb string) int {
+    // We convert strings to number
+    a, b := 0, 0
+     
+    // calculating a % MOD
+    for i := 0; i < len(sa); i++{
+        a = (a * 10 + int((sa[i] - '0'))) % MOD;
+    }
+     
+    // calculating b % (MOD - 1)
+    for i := 0; i < len(sb); i++ {
+        b = (b * 10 + int((sb[i] - '0'))) % (MOD - 1);
+    }
+     
+    // Now a and b are long long let. We
+    // calculate a^b using modulo exponentiation
+    return powerLL(a, b);
+}
+
 func FibonacciLoop(n int) int {
 	f := make([]int, n+1, n+2)
 	if n < 2 {
