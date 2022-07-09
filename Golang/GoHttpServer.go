@@ -20,47 +20,49 @@ import (
  */
 
 func postHandler(w http.ResponseWriter, req *http.Request) {
-	var lake Lake
+    payload := Lake{}
 
-	decoder := json.NewDecoder(req.Body)
-	decoder.DisallowUnknownFields()
-	err := decoder.Decode(&lake)
-	if err != nil {
-	}
-	store[lake.Id] = lake
+    body, err := ioutil.ReadAll(req.Body)
+    if err != nil {
+       panic(err)
+    }
 
-	// fmt.Printf("%s\n", lake.Name)
-	// fmt.Printf("%d\n", lake.Area)
+    err = json.Unmarshal(body, &payload)
+    if err != nil {
+        panic(err)
+    }
+    store[payload.Id] = payload
 }
 
 func deleteHandler(w http.ResponseWriter, req *http.Request) {
-
+    query := req.URL.Query()
+    id := query.Get("id")
+    
+    if _, ok := store[id]; ok {
+        delete(store, id)
+    } else {
+        w.WriteHeader(http.StatusNotFound)
+    }
 }
 
 func getHandler(w http.ResponseWriter, req *http.Request) {
-	var action Action
+    query := req.URL.Query()
+    id := query.Get("id")
+    fmt.Println(id)
+    fmt.Println(store[id])
 
-	fmt.Println(req.Body)
-
-	decoder := json.NewDecoder(req.Body)
-	decoder.DisallowUnknownFields()
-	err := decoder.Decode(&action)
-	if err != nil {
-	}
-	query := req.URL.Query()
-
-	// json.NewEncoder(w).Encode(store[action.Payload])
-	json.NewEncoder(w).Encode(store[query["id"][0]])
-
-	if _, ok := store[action.Payload]; ok {
-		// fmt.Printf("%s\n", val.Name)
-		// fmt.Printf("%d\n", val.Area)
-
-		// json.NewEncoder(w).Encode(val)
-	} else {
-		// fmt.Println("404 Not Found")
-		fmt.Fprint(w, "404 Not Found")
-	}
+    if _, ok := store[id]; ok {
+        res, err := json.Marshal(store[id])
+        if err != nil {
+            w.WriteHeader(http.StatusInternalServerError)
+            return
+        }
+            
+        w.Header().Set("Content-Type", "application/json")
+        w.Write(res)
+    } else {
+        w.WriteHeader(http.StatusNotFound)
+    }
 }
 
 func main() {
