@@ -50,6 +50,13 @@ class BST {
          }
          return false
      }
+    
+     minValueNode(currentNode) {
+        while (currentNode.left != null) {
+            currentNode = currentNode.left
+        }
+        return currentNode
+    }
 
     BFS() {
         let currentNode = this.root
@@ -111,3 +118,4 @@ myTree.insert(52)
 myTree.insert(82)
 
 // [18, 21, 27, 47, 52, 76, 82]
+myTree.minValueNode(myTree.root)
