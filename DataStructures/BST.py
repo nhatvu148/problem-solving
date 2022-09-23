@@ -42,6 +42,11 @@ class BinarySearchTree:
             else:
                 return True
         return False
+    
+    def min_value_node(self, current_node):
+        while current_node.left is not None:
+            current_node = current_node.left
+        return current_node
         
 
     def BFS(self):
@@ -94,4 +99,27 @@ class BinarySearchTree:
                 traverse(current_node.right)          
         traverse(self.root)
         return results
-         
+
+    
+my_tree = BinarySearchTree()
+my_tree.insert(47)
+my_tree.insert(21)
+my_tree.insert(76)
+my_tree.insert(18)
+my_tree.insert(27)
+my_tree.insert(52)
+my_tree.insert(82)
+
+
+print('Minimum Value in Tree:')
+print( my_tree.min_value_node(my_tree.root).value )
+
+            
+
+"""
+    EXPECTED OUTPUT:
+    ----------------
+    Minimum Value in Tree:
+    18
+
+"""
