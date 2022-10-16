@@ -1,8 +1,10 @@
-function BinaryHeap() {
-  let list = [];
+class BinaryHeap {
+  constructor() {
+    this.list = [];
+  }
 
   //Heapify
-  this.maxHeapify = (arr, n, i) => {
+  maxHeapify = (arr, n, i) => {
     let largest = i;
     let l = 2 * i + 1; //left child index
     let r = 2 * i + 2; //right child index
@@ -29,69 +31,68 @@ function BinaryHeap() {
   };
 
   //Insert Value
-  this.insert = (num) => {
-    const size = list.length;
-
+  insert = (num) => {
+    const size = this.list.length;
     if (size === 0) {
-      list.push(num);
+      this.list.push(num);
     } else {
-      list.push(num);
+      this.list.push(num);
 
       //Heapify
-      for (let i = parseInt(list.length / 2 - 1); i >= 0; i--) {
-        this.maxHeapify(list, list.length, i);
+      for (let i = parseInt(this.list.length / 2 - 1); i >= 0; i--) {
+        this.maxHeapify(this.list, this.list.length, i);
       }
     }
   };
 
   //Remove value
-  this.delete = (num) => {
-    const size = list.length;
+  delete = (num) => {
+    const size = this.list.length;
 
     //Get the index of the number to be removed
     let i;
     for (i = 0; i < size; i++) {
-      if (list[i] === num) {
+      if (num === this.list[i]) {
         break;
       }
     }
 
     //Swap the number with last element
-    [list[i], list[size - 1]] = [list[size - 1], list[i]];
+    [this.list[i], this.list[size - 1]] = [this.list[size - 1], this.list[i]];
 
     //Remove the last element
-    list.splice(size - 1);
+    this.list.splice(size - 1);
 
     //Heapify the list again
-    for (let i = parseInt(list.length / 2 - 1); i >= 0; i--) {
-      this.maxHeapify(list, list.length, i);
+    for (let i = parseInt(this.list.length / 2 - 1); i >= 0; i--) {
+      this.maxHeapify(this.list, this.list.length, i);
     }
   };
 
   //Return max value
-  this.findMax = () => list[0];
+  findMax = () => this.list[0];
 
   //Remove max val
-  this.deleteMax = () => {
-    this.delete(list[0]);
+  deleteMax = () => {
+    this.delete(this.list[0]);
   };
 
   //Remove and return max value
-  this.extractMax = () => {
-    const max = list[0];
+  extractMax = () => {
+    const max = this.list[0];
     this.delete(max);
     return max;
   };
 
   //Size
-  this.size = () => list.length;
+  size = () => this.list.length;
 
   //IsEmpty
-  this.isEmpty = () => list.length === 0;
+  isEmpty = () => this.list.length === 0;
 
   //Return head
-  this.getList = () => list;
-};
+  getList = () => this.list;
+}
 
 const heap = new BinaryHeap();
 heap.insert(3);
