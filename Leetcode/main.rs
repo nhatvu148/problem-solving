@@ -1,7 +1,38 @@
 use std::collections::HashMap;
 
 fn main() {
-    println!("{}", is_valid(String::from("()[]))")));
+    println!("{}", my_sqrt(8));
+}
+
+pub fn my_sqrt(x: i32) -> i32 {
+    // (x as f64).sqrt().round() as i32
+    if x == 0 {
+        return 0;
+    }
+    let mut left = 1;
+    let mut right = x;
+    let mut mid = x / 2;
+
+    while left <= right {
+        if mid == 0 {
+            break;
+        }
+        if x / mid < mid {
+            right = mid - 1;
+        } else if x / mid > mid {
+            if x / (mid + 1) < mid + 1 {
+                return mid;
+            } else {
+                left = mid + 1;
+            }
+        } else {
+            return mid;
+        }
+
+        mid = left + (right - left) / 2;
+    }
+
+    1
 }
 
 pub fn is_valid(s: String) -> bool {
