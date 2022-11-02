@@ -28,7 +28,7 @@ pub fn plus_one(digits: Vec<i32>) -> Vec<i32> {
     let mut i = 0;
     let mut needs_extra = false;
 
-    while let Some(x) = digits_rev.get(i) {
+    while let Some(_x) = digits_rev.get(i) {
         if digits_rev[i] == 9 {
             digits_rev[i] = 0;
             if i == digits_rev.len() - 1 {
