@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -7,15 +7,58 @@ struct Point {
     y: i32,
 }
 fn main() {
-    let point = Point { x: 1, y: 2 };
+    // let point = Point { x: 1, y: 2 };
 
-    let serialized = serde_json::to_string(&point).unwrap();
-    println!("serialized = {}", serialized);
+    // let serialized = serde_json::to_string(&point).unwrap();
+    // println!("serialized = {}", serialized);
 
-    let deserialized: Point = serde_json::from_str(&serialized).unwrap();
-    println!("deserialized = {:?}", deserialized);
-    println!("{}", my_sqrt(8));
+    // let deserialized: Point = serde_json::from_str(&serialized).unwrap();
+    // println!("deserialized = {:?}", deserialized);
+
+    let digits = vec![
+        7, 2, 8, 5, 0, 9, 1, 2, 9, 5, 3, 6, 6, 7, 3, 2, 8, 4, 3, 7, 9, 5, 7, 7, 4, 7, 4, 9, 4, 7,
+        0, 1, 1, 1, 7, 4, 0, 0, 6,
+    ];
+    // [9,8,7,6,5,4,3,2,1,0]
+    println!("{:?}", plus_one(digits));
 }
+
+pub fn plus_one(digits: Vec<i32>) -> Vec<i32> {
+    let mut digits_rev = digits.into_iter().rev().collect::<Vec<_>>();
+    let mut i = 0;
+    let mut needs_extra = false;
+
+    while let Some(x) = digits_rev.get(i) {
+        if digits_rev[i] == 9 {
+            digits_rev[i] = 0;
+            if i == digits_rev.len() - 1 {
+                needs_extra = true;
+            }
+        } else {
+            digits_rev[i] += 1;
+            break;
+        }
+        i += 1;
+    }
+    if needs_extra {
+        digits_rev.push(1);
+    }
+
+    digits_rev.into_iter().rev().collect::<Vec<_>>()
+}
+// let d_plus_1 = digits
+//     .iter()
+//     .map(|&x| x.to_string())
+//     .collect::<Vec<_>>()
+//     .join("")
+//     .parse::<i128>()
+//     .unwrap()
+//     + 1;
+// let d_plus_1_vec = d_plus_1
+//     .to_string()
+//     .chars()
+//     .map(|x| x.to_string().parse::<i32>().unwrap())
+//     .collect::<Vec<_>>();
 
 pub fn my_sqrt(x: i32) -> i32 {
     // (x as f64).sqrt().round() as i32
