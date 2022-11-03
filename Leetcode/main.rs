@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::{collections::HashMap, vec};
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Point {
@@ -15,7 +15,57 @@ fn main() {
     // let deserialized: Point = serde_json::from_str(&serialized).unwrap();
     // println!("deserialized = {:?}", deserialized);
 
-    println!("{}", reverse(-123));
+    println!("{}", my_atoi(String::from(" ")));
+}
+
+pub fn my_atoi(s: String) -> i32 {
+    let mut result = 0;
+    let mut i = 0;
+    let mut sign = 1;
+
+    if s.len() == 0 {
+        return 0;
+    }
+
+    while i < s.len() && s.chars().nth(i) == Some(' ') {
+        i += 1;
+    }
+
+    if s.chars().nth(i) == Some('-') {
+        sign = -1;
+        i += 1
+    } else if s.chars().nth(i) == Some('+') {
+        sign = 1;
+        i += 1
+    }
+
+    while i < s.len() && s.chars().nth(i).unwrap() >= '0' && s.chars().nth(i).unwrap() <= '9' {
+        let digit = s
+            .chars()
+            .nth(i)
+            .unwrap()
+            .to_string()
+            .parse::<i32>()
+            .unwrap()
+            * sign;
+
+        if sign == 1
+            && (result > i32::MAX / 10 || (result == i32::MAX / 10 && digit > i32::MAX % 10))
+        {
+            return i32::MAX;
+        }
+
+        if sign == -1
+            && (result < i32::MIN / 10 || (result == i32::MIN / 10 && digit < i32::MIN % 10))
+        {
+            return i32::MIN;
+        }
+
+        result = result * 10 + digit;
+        i += 1;
+    }
+
+    result
 }
 
 pub fn reverse(x: i32) -> i32 {
