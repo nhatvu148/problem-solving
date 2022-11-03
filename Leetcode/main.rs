@@ -1,4 +1,6 @@
+use libc::c_char;
 use serde::{Deserialize, Serialize};
+use std::ffi::CStr;
 use std::{collections::HashMap, vec};
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -6,6 +8,19 @@ struct Point {
     x: i32,
     y: i32,
 }
+
+extern "C" {
+    fn hello_world() -> *const c_char;
+}
+
+fn call_hello_world() -> &'static str {
+    unsafe {
+        CStr::from_ptr(hello_world())
+            .to_str()
+            .expect("String conversion failure")
+    }
+}
+
 fn main() {
     // let point = Point { x: 1, y: 2 };
 
@@ -15,7 +30,9 @@ fn main() {
     // let deserialized: Point = serde_json::from_str(&serialized).unwrap();
     // println!("deserialized = {:?}", deserialized);
 
-    println!("{}", my_atoi(String::from(" ")));
+    println!("{}", call_hello_world());
+
+    // println!("{}", my_atoi(String::from(" ")));
 }
 
 pub fn my_atoi(s: String) -> i32 {
