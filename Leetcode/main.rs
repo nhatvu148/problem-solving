@@ -15,12 +15,34 @@ fn main() {
     // let deserialized: Point = serde_json::from_str(&serialized).unwrap();
     // println!("deserialized = {:?}", deserialized);
 
-    let digits = vec![
-        7, 2, 8, 5, 0, 9, 1, 2, 9, 5, 3, 6, 6, 7, 3, 2, 8, 4, 3, 7, 9, 5, 7, 7, 4, 7, 4, 9, 4, 7,
-        0, 1, 1, 1, 7, 4, 0, 0, 6,
-    ];
-    // [9,8,7,6,5,4,3,2,1,0]
-    println!("{:?}", plus_one(digits));
+    println!("{}", reverse(-123));
+}
+
+pub fn reverse(x: i32) -> i32 {
+    let mut str = x.to_string();
+    let mut is_minus = false;
+    let mut rev_str: Vec<String> = vec![];
+
+    if str.contains("-") {
+        is_minus = true;
+        str = String::from(&str[1..]);
+    }
+
+    for x in str.chars().rev() {
+        rev_str.push(x.to_string());
+    }
+
+    let res_abs = rev_str.join("").parse::<i32>();
+    return match res_abs {
+        Ok(x) => {
+            if is_minus {
+                x * -1
+            } else {
+                x
+            }
+        }
+        Err(_x) => 0,
+    };
 }
 
 pub fn plus_one(digits: Vec<i32>) -> Vec<i32> {
