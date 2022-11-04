@@ -1,5 +1,6 @@
 use libc::c_char;
 use serde::{Deserialize, Serialize};
+use std::collections::linked_list;
 use std::ffi::CStr;
 use std::{collections::HashMap, vec};
 
@@ -32,7 +33,116 @@ fn main() {
 
     // println!("{}", call_hello_world());
 
-    println!("{}", reverse_vowels(String::from("aA")));
+    // let my_number = 1;
+    // println!("my_number memory location {:p}", &my_number);
+    // let my_number = 1;
+    // let my_number_pointer: *const i32 = &my_number;
+    // println!("my_number memory location {:p}", my_number_pointer);
+
+    // let mut my_number = 1;
+    // println!("my_number memory location {:p}", &mut my_number);
+    // // or
+    // let mut my_number = 1;
+    // // let my_number_pointer: *const i32 = &mut my_number;
+    // let my_number_pointer: *mut i32 = &mut my_number;
+    // println!("my_number memory location {:p}", my_number_pointer);
+
+    let l1 = vec![2, 4, 3];
+    let l2 = vec![5, 6, 4];
+
+    let linked_list1 = create_linked_list_from_vec(l1);
+    println!("{:?}", &linked_list1);
+
+    let linked_list2 = create_linked_list_from_vec(l2);
+    println!("{:?}", &linked_list1);
+
+    println!(
+        "{:?}",
+        add_two_numbers(Some(linked_list1), Some(linked_list2))
+    );
+}
+
+fn create_linked_list_from_vec(l: Vec<i32>) -> Box<ListNode> {
+    let mut linked_list = Box::new(ListNode::new(l[0]));
+    for (i, x) in l.into_iter().enumerate() {
+        if i == 0 {
+            continue;
+        }
+        linked_list.insert(x);
+    }
+    linked_list
+}
+
+#[derive(PartialEq, Eq, Clone, Debug)]
+pub struct ListNode {
+    pub val: i32,
+    pub next: Option<Box<ListNode>>,
+}
+
+impl ListNode {
+    #[inline]
+    fn new(val: i32) -> Self {
+        ListNode { next: None, val }
+    }
+
+    fn insert(&mut self, val: i32) {
+        let node = Box::new(ListNode::new(val));
+        if self.next == None {
+            self.next = Some(node);
+        } else {
+            self.next.as_mut().unwrap().insert(val);
+        }
+    }
+
+    fn add(&mut self, list_node: ListNode) -> Box<Self> {
+        let val = self.val + list_node.val;
+        let mut is_over_10 = false;
+        let mut node = Box::new(ListNode::new(if val >= 10 {
+            is_over_10 = true;
+            val - 10
+        } else {
+            val
+        }));
+        let mut p1 = self.next.clone();
+        let mut p2 = list_node.next.clone();
+        let mut next = &mut node;
+        while p1 != None || p2 != None || is_over_10 {
+            let unwrapped_p1 = match p1 {
+                Some(p) => p,
+                None => Box::new(ListNode::new(0)),
+            };
+            let unwrapped_p2 = match p2 {
+                Some(p) => p,
+                None => Box::new(ListNode::new(0)),
+            };
+            let val = unwrapped_p1.val + unwrapped_p2.val + if is_over_10 { 1 } else { 0 };
+            let next_node = Box::new(ListNode::new(if val >= 10 {
+                is_over_10 = true;
+                val - 10
+            } else {
+                is_over_10 = false;
+                val
+            }));
+
+            next.next = Some(next_node);
+            next = next.next.as_mut().unwrap();
+
+            p1 = unwrapped_p1.next;
+            p2 = unwrapped_p2.next;
+        }
+        // println!("{:?}", node);
+
+        node
+    }
+}
+
+// Some(ListNode { val: 2, next: Some(ListNode { val: 4, next: Some(ListNode { val: 3, next: None }) }) })
+// Some(ListNode { val: 5, next: Some(ListNode { val: 6, next: Some(ListNode { val: 4, next: None }) }) })
+pub fn add_two_numbers(
+    l1: Option<Box<ListNode>>,
+    l2: Option<Box<ListNode>>,
+) -> Option<Box<ListNode>> {
+    Some(l1?.add(*l2.unwrap()))
 }
 
 fn is_vowel(ch: char) -> bool {
