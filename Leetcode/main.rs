@@ -35,7 +35,48 @@ fn main() {
     println!("{}", reverse_vowels(String::from("aA")));
 }
 
+fn is_vowel(ch: char) -> bool {
+    let lowered_ch = ch.to_lowercase().to_string().chars().next();
+    if lowered_ch == Some('a')
+        || lowered_ch == Some('i')
+        || lowered_ch == Some('u')
+        || lowered_ch == Some('e')
+        || lowered_ch == Some('o')
+    {
+        true
+    } else {
+        false
+    }
+}
+
 pub fn reverse_vowels(s: String) -> String {
+    let mut low = 0;
+    let mut high = s.len() - 1;
+    let mut s = s;
+
+    while low < high {
+        let is_low_vowel = is_vowel(s.chars().nth(low).unwrap());
+        let is_high_vowel = is_vowel(s.chars().nth(high).unwrap());
+        if is_low_vowel && is_high_vowel {
+            let mut chs = s.chars().collect::<Vec<char>>();
+            chs.swap(low, high);
+            s = chs
+                .into_iter()
+                .map(|x| x.to_string())
+                .collect::<Vec<String>>()
+                .join("");
+            low += 1;
+            high -= 1;
+        } else if !is_low_vowel {
+            low += 1;
+        } else if !is_high_vowel {
+            high -= 1;
+        }
+    }
+    s
+}
+
+pub fn reverse_vowels2(s: String) -> String {
     const VOWELS: [char; 10] = ['a', 'i', 'u', 'e', 'o', 'A', 'I', 'U', 'E', 'O'];
     let mut vowel_vec: Vec<char> = vec![];
     let mut result: Vec<char> = vec![];
