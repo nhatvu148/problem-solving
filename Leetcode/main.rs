@@ -30,9 +30,25 @@ fn main() {
     // let deserialized: Point = serde_json::from_str(&serialized).unwrap();
     // println!("deserialized = {:?}", deserialized);
 
-    println!("{}", call_hello_world());
+    // println!("{}", call_hello_world());
 
-    // println!("{}", my_atoi(String::from(" ")));
+    println!("{}", int_to_roman(1234));
+}
+
+pub fn int_to_roman(num: i32) -> String {
+    let normal = vec![1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+    let roman = vec![
+        "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I",
+    ];
+    let mut result: Vec<&str> = vec![];
+    let mut num = num;
+    for i in 0..13 {
+        while num >= normal[i] {
+            result.push(roman[i]);
+            num -= normal[i];
+        }
+    }
+    result.iter().map(|&s| s.to_string()).collect::<Vec<String>>().join("")
 }
 
 pub fn my_atoi(s: String) -> i32 {
