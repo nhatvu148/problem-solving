@@ -32,7 +32,35 @@ fn main() {
 
     // println!("{}", call_hello_world());
 
-    println!("{}", int_to_roman(1234));
+    println!("{}", reverse_vowels(String::from("aA")));
+}
+
+pub fn reverse_vowels(s: String) -> String {
+    const VOWELS: [char; 10] = ['a', 'i', 'u', 'e', 'o', 'A', 'I', 'U', 'E', 'O'];
+    let mut vowel_vec: Vec<char> = vec![];
+    let mut result: Vec<char> = vec![];
+    for x in s.chars() {
+        if VOWELS.contains(&x) {
+            vowel_vec.push(x);
+        }
+    }
+
+    let rev_vowel_vec: Vec<char> = vowel_vec.into_iter().rev().collect();
+    let mut key = 0;
+    for x in s.chars() {
+        if VOWELS.contains(&x) {
+            result.push(rev_vowel_vec[key]);
+            key += 1;
+        } else {
+            result.push(x);
+        }
+    }
+
+    result
+        .iter()
+        .map(|&s| s.to_string())
+        .collect::<Vec<String>>()
+        .join("")
 }
 
 pub fn int_to_roman(num: i32) -> String {
@@ -48,7 +76,11 @@ pub fn int_to_roman(num: i32) -> String {
             num -= normal[i];
         }
     }
-    result.iter().map(|&s| s.to_string()).collect::<Vec<String>>().join("")
+    result
+        .iter()
+        .map(|&s| s.to_string())
+        .collect::<Vec<String>>()
+        .join("")
 }
 
 pub fn my_atoi(s: String) -> i32 {
