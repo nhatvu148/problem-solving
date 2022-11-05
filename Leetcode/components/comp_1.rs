@@ -74,6 +74,40 @@ impl ListNode {
     }
 }
 
+pub fn merge_two_lists(
+    mut list1: Option<Box<ListNode>>,
+    mut list2: Option<Box<ListNode>>,
+) -> Option<Box<ListNode>> {
+    use std::mem;
+
+    let mut dummy = None;
+    let mut p_next = &mut dummy;
+
+    while list1.is_some() && list2.is_some() {
+        let lone = &mut list1;
+        let ltwo = &mut list2;
+        let l = if lone.as_ref().unwrap().val < ltwo.as_ref().unwrap().val {
+            lone
+        } else {
+            ltwo
+        };
+
+        mem::swap(p_next, l);
+        mem::swap(l, &mut p_next.as_mut().unwrap().next);
+        p_next = &mut p_next.as_mut().unwrap().next;
+    }
+
+    mem::swap(
+        p_next,
+        if list1.is_none() {
+            &mut list2
+        } else {
+            &mut list1
+        },
+    );
+    dummy
+}
+
 // Some(ListNode { val: 2, next: Some(ListNode { val: 4, next: Some(ListNode { val: 3, next: None }) }) })
 // Some(ListNode { val: 5, next: Some(ListNode { val: 6, next: Some(ListNode { val: 4, next: None }) }) })
 pub fn add_two_numbers(
