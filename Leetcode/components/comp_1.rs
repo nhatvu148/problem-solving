@@ -4,6 +4,29 @@ use std::ffi::CStr;
 use std::num::ParseIntError;
 use std::{collections::HashMap, vec};
 
+pub fn maximum69_number(num: i32) -> i32 {
+    let mut max = num;
+    let num_str = num.to_string();
+
+    for (i, s) in num_str.chars().enumerate() {
+        let mut num_str_cpy = num_str.clone();
+        if s == '6' {
+            num_str_cpy.replace_range(i..i + 1, "9");
+            let num_cpy = num_str_cpy.parse::<i32>().unwrap();
+            if num_cpy > max {
+                max = num_cpy;
+            }
+        }
+    }
+
+    max
+}
+
+pub fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
+    nums.retain(|&x| x != val);
+    nums.len() as i32
+}
+
 pub fn slide_window_example1() {
     let input = vec![1, 3, 2, 6, -1, 4, 1, 8, 2];
     println!("{:?}", find_averages_of_subarrays(input, 5));
