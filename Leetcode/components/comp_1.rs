@@ -1,7 +1,40 @@
 use libc::c_char;
 use serde::{Deserialize, Serialize};
 use std::ffi::CStr;
+use std::num::ParseIntError;
 use std::{collections::HashMap, vec};
+
+pub fn result_example() {
+    let v = vec![String::from("3"), String::from("4")];
+    let total = sum_str_vec(v);
+    println!("{:?}", total);
+
+    let v = vec![String::from("3"), String::from("abc")];
+    let total = sum_str_vec(v);
+    println!("{:?}", total);
+}
+
+#[derive(Debug)]
+pub struct SummationError;
+
+pub fn to_int(s: &str) -> Result<i32, ParseIntError> {
+    // Option<i32> {
+    s.parse()
+    // s.parse().ok()
+}
+
+pub fn sum_str_vec(strs: Vec<String>) -> Result<String, SummationError> {
+    // Option<String> {
+    let mut accum = 0i32;
+    for s in strs {
+        accum += to_int(&s).map_err(|_| SummationError)?;
+        // accum += to_int(&s).ok_or(SummationError)?;
+        // accum += to_int(&s)?;
+    }
+
+    Ok(accum.to_string())
+    // Some(accum.to_string())
+}
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Point {
