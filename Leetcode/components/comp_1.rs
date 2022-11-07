@@ -4,6 +4,28 @@ use std::ffi::CStr;
 use std::num::ParseIntError;
 use std::{collections::HashMap, vec};
 
+pub fn slide_window_example1() {
+    let input = vec![1, 3, 2, 6, -1, 4, 1, 8, 2];
+    println!("{:?}", find_averages_of_subarrays(input, 5));
+}
+
+pub fn find_averages_of_subarrays(v: Vec<i32>, k: usize) -> Vec<f32> {
+    let mut result: Vec<f32> = vec![];
+    let mut window_sum = 0.0;
+    let mut window_start = 0;
+
+    for (window_end, element) in v.iter().enumerate() {
+        window_sum += *element as f32;
+        if window_end >= k - 1 {
+            result.push(window_sum / k as f32);
+            window_sum -= v[window_start] as f32;
+            window_start += 1;
+        }
+    }
+
+    result
+}
+
 pub fn result_example() {
     let v = vec![String::from("3"), String::from("4")];
     let total = sum_str_vec(v);
