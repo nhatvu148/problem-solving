@@ -2,5 +2,5 @@ mod components;
 use components::comp_1::*;
 
 fn main() {
-    result_example();
+    println!("{}", maximum69_number(9669));
 }
