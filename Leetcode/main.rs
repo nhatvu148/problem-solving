@@ -2,5 +2,12 @@ mod components;
 use components::comp_1::*;
 
 fn main() {
-    println!("{}", maximum69_number(9669));
+    let mut obj = StockSpanner::new();
+    println!("{}", obj.next(100));
+    println!("{}", obj.next(80));
+    println!("{}", obj.next(60));
+    println!("{}", obj.next(70));
+    println!("{}", obj.next(60));
+    println!("{}", obj.next(75));
+    println!("{}", obj.next(85));
 }
