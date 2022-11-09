@@ -4,6 +4,31 @@ use std::ffi::CStr;
 use std::num::ParseIntError;
 use std::{collections::HashMap, vec};
 
+pub struct StockSpanner {
+    daily_prices: Vec<i32>,
+}
+
+impl StockSpanner {
+    pub fn new() -> Self {
+        StockSpanner {
+            daily_prices: vec![],
+        }
+    }
+
+    pub fn next(&mut self, price: i32) -> i32 {
+        self.daily_prices.push(price);
+        let mut counter = 0;
+        for p in self.daily_prices.iter().rev() {
+            if *p <= price {
+                counter += 1;
+            } else {
+                break;
+            }
+        }
+        counter
+    }
+}
+
 pub fn make_good(s: String) -> String {
     let diff_cases =
         |c1: char, c2: char| c1.to_ascii_lowercase() == c2.to_ascii_lowercase() && c1 != c2;
