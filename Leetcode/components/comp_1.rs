@@ -47,15 +47,6 @@ impl StockSpanner {
             }
         }
         counter
-
-        // let mut obj = StockSpanner::new();
-        // println!("{}", obj.next(100));
-        // println!("{}", obj.next(80));
-        // println!("{}", obj.next(60));
-        // println!("{}", obj.next(70));
-        // println!("{}", obj.next(60));
-        // println!("{}", obj.next(75));
-        // println!("{}", obj.next(85));
     }
 }
 
@@ -351,7 +342,7 @@ fn is_vowel(ch: char) -> bool {
     }
 }
 
-pub fn reverse_vowels(s: String) -> String {
+pub fn reverse_vowels2(s: String) -> String {
     let mut low = 0;
     let mut high = s.len() - 1;
     let mut s = s;
@@ -378,7 +369,7 @@ pub fn reverse_vowels(s: String) -> String {
     s
 }
 
-pub fn reverse_vowels2(s: String) -> String {
+pub fn reverse_vowels(s: String) -> String {
     const VOWELS: [char; 10] = ['a', 'i', 'u', 'e', 'o', 'A', 'I', 'U', 'E', 'O'];
     let mut vowel_vec: Vec<char> = vec![];
     let mut result: Vec<char> = vec![];
@@ -404,6 +395,22 @@ pub fn reverse_vowels2(s: String) -> String {
         .map(|&s| s.to_string())
         .collect::<Vec<String>>()
         .join("")
+}
+
+pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
+    let mut result = vec![];
+    for (i1, n1) in nums.iter().enumerate() {
+        match nums.iter().position(|&r| r == target - n1) {
+            Some(i2) if i2 != i1 => {
+                result.push(i1 as i32);
+                result.push(i2 as i32);
+                break;
+            }
+            _ => {}
+        }
+    }
+
+    result
 }
 
 pub fn int_to_roman(num: i32) -> String {
