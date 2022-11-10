@@ -4,6 +4,23 @@ use std::ffi::CStr;
 use std::num::ParseIntError;
 use std::{collections::HashMap, vec};
 
+pub fn remove_duplicates(s: String) -> String {
+    let is_dup = |c1: char, c2: char| c1 == c2;
+    s.chars()
+        .into_iter()
+        .fold(Vec::with_capacity(s.len()), |mut v: Vec<char>, c: char| {
+            match v.last() {
+                Some(prev_c) if is_dup(c, *prev_c) => {
+                    v.pop();
+                }
+                _ => v.push(c),
+            }
+            v
+        })
+        .iter()
+        .collect()
+}
+
 pub struct StockSpanner {
     daily_prices: Vec<i32>,
 }
