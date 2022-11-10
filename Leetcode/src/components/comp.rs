@@ -1,5 +1,6 @@
 #![allow(dead_code, unused_imports)]
-use std::rc::Rc;
+use std::sync::Arc;
+use std::{rc::Rc, thread::spawn};
 
 pub trait Vehicle {
     fn drive(&self);
@@ -42,4 +43,35 @@ pub fn smart_pointer_example() {
     std::mem::drop(facility_two);
     println!("Facility one after drop {:?}", facility_one);
     println!("Truck b strong count {:?}", Rc::strong_count(&truck_b));
+}
+
+pub fn smart_pointer_thread_example() {
+    let t: Box<dyn Vehicle>; // variable of a trait type that cannot
+                             // be computed at compile time
+    t = Box::new(Truck);
+    t.drive();
+
+    let (truck_a, truck_b, truck_c) = (
+        Arc::new(Truck3 { capacity: 1 }),
+        Arc::new(Truck3 { capacity: 2 }),
+        Arc::new(Truck3 { capacity: 3 }),
+    );
+
+    let thread = std::thread::spawn(move || {
+        let facility_one = vec![Arc::clone(&truck_a), Arc::clone(&truck_b)];
+        let facility_two = vec![Arc::clone(&truck_b), Arc::clone(&truck_c)];
+        (facility_one, facility_two)
+    });
+
+    let (facility_one, facility_two) = thread.join().unwrap();
+
+    println!("Facility one {:?}", facility_one);
+    println!("Facility two {:?}", facility_two);
+
+    let truck_b = Arc::clone(&facility_one[1]);
+    println!("Truck b strong count {:?}", Arc::strong_count(&truck_b));
+
+    std::mem::drop(facility_two);
+    println!("Facility one after drop {:?}", facility_one);
+    println!("Truck b strong count {:?}", Arc::strong_count(&truck_b));
 }

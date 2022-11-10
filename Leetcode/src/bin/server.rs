@@ -3,5 +3,5 @@ use leetcode::components::comp::*;
 use leetcode::components::comp_1::*;
 
 fn main() {
-    println!("{}", remove_duplicates(String::from("azxxzy")));
+    smart_pointer_thread_example();
 }
