@@ -6,3 +6,9 @@ hs:
 
 test:
 	cargo test -- --show-output --test-threads=4
+
+run:
+	cargo run --bin server
+
+build:
+	cargo build
