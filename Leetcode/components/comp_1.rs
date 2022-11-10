@@ -4,6 +4,25 @@ use std::ffi::CStr;
 use std::num::ParseIntError;
 use std::{collections::HashMap, vec};
 
+pub trait Vehicle {
+    fn drive(&self);
+}
+
+pub struct Truck;
+pub struct Truck2 {
+    next_truck: Option<Box<Truck2>>, // recursive data type
+}
+#[derive(Debug)]
+pub struct Truck3 {
+    pub capacity: i32,
+}
+
+impl Vehicle for Truck {
+    fn drive(&self) {
+        println!("Truck is driving");
+    }
+}
+
 pub struct StockSpanner {
     daily_prices: Vec<i32>,
 }
@@ -26,6 +45,15 @@ impl StockSpanner {
             }
         }
         counter
+
+        // let mut obj = StockSpanner::new();
+        // println!("{}", obj.next(100));
+        // println!("{}", obj.next(80));
+        // println!("{}", obj.next(60));
+        // println!("{}", obj.next(70));
+        // println!("{}", obj.next(60));
+        // println!("{}", obj.next(75));
+        // println!("{}", obj.next(85));
     }
 }
 
