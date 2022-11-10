@@ -1,4 +1,4 @@
-use problem2::components::comp_1::*;
+use leetcode::components::comp_1::*;
 
 #[test]
 fn test_integration() {
