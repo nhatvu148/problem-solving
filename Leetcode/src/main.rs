@@ -1,3 +1,4 @@
+#![allow(dead_code, unused_imports)]
 mod components;
 use components::comp::*;
 use components::comp_1::*;

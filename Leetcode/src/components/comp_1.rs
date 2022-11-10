@@ -1,3 +1,4 @@
+#![allow(dead_code, unused_imports)]
 use libc::c_char;
 use serde::{Deserialize, Serialize};
 use std::ffi::CStr;
@@ -5,8 +6,8 @@ use std::num::ParseIntError;
 use std::{collections::HashMap, vec};
 
 #[cfg(test)]
-#[path = "../tests/comp_1.rs"]
-mod comp_1;
+#[path = "../unit_tests/comp_1.rs"]
+mod comp_1_tests;
 
 pub fn remove_duplicates(s: String) -> String {
     let is_dup = |c1: char, c2: char| c1 == c2;

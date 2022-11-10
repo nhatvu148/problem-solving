@@ -1,5 +1,5 @@
-mod comp_1 {
-    use crate::*;
+mod comp_1_tests {
+    use crate::components::comp_1::*;
 
     #[test]
     fn test_remove_duplicates() {
