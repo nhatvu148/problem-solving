@@ -2,6 +2,15 @@ mod comp_1_tests {
     use crate::components::comp_1::*;
 
     #[test]
+    fn test_remove_vec_duplicates() {
+        assert_eq!(remove_vec_duplicates(&mut vec![1, 1, 2]), 2);
+        assert_eq!(
+            remove_vec_duplicates(&mut vec![0, 0, 1, 1, 1, 2, 2, 3, 3, 4]),
+            5
+        );
+    }
+
+    #[test]
     fn test_remove_duplicates() {
         assert_eq!(remove_duplicates("abbaca".to_string()), "ca");
         assert_eq!(remove_duplicates("azxxzy".to_string()), "ay");

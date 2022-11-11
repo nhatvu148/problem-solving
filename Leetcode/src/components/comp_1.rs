@@ -9,6 +9,22 @@ use std::{collections::HashMap, vec};
 #[path = "../unit_tests/comp_1.rs"]
 mod comp_1_tests;
 
+pub fn remove_vec_duplicates(nums: &mut Vec<i32>) -> i32 {
+    let n = nums.len();
+    if n < 2 {
+        return n as i32;
+    }
+    let mut j = 1;
+    for i in 1..n {
+        if nums[i] != nums[i - 1] {
+            nums[j] = nums[i];
+            j += 1;
+        }
+    }
+    println!("{:?}", nums);
+    j as i32
+}
+
 pub fn remove_duplicates(s: String) -> String {
     let is_dup = |c1: char, c2: char| c1 == c2;
     s.chars()
