@@ -75,3 +75,82 @@ pub fn smart_pointer_thread_example() {
     println!("Facility one after drop {:?}", facility_one);
     println!("Truck b strong count {:?}", Arc::strong_count(&truck_b));
 }
+
+pub trait Speaks {
+    fn speak(&self);
+}
+
+pub trait Animal {
+    fn animal_type(&self) -> &str;
+    fn noise(&self) -> &str;
+}
+
+impl<T> Speaks for T
+where
+    T: Animal,
+{
+    fn speak(&self) {
+        println!("The {} said {}", self.animal_type(), self.noise());
+    }
+}
+
+pub struct Dog {}
+pub struct Cat {}
+
+impl Animal for Dog {
+    fn animal_type(&self) -> &str {
+        "dog"
+    }
+
+    fn noise(&self) -> &str {
+        "woof"
+    }
+}
+
+impl Animal for Cat {
+    fn animal_type(&self) -> &str {
+        "cat"
+    }
+
+    fn noise(&self) -> &str {
+        "meow"
+    }
+}
+
+trait Human {
+    fn name(&self) -> &str;
+    fn sentence(&self) -> &str;
+}
+
+struct Person {}
+
+impl Human for Person {
+    fn name(&self) -> &str {
+        "man"
+    }
+
+    fn sentence(&self) -> &str {
+        "hello"
+    }
+}
+
+impl Speaks for dyn Human {
+    fn speak(&self) {
+        println!("The {} said {}", self.name(), self.sentence());
+    }
+}
+
+pub fn inheritance_example() {
+    let dog = Dog {};
+    let cat = Cat {};
+    dog.speak();
+    cat.speak();
+    println!("type is {}", type_of(dog));
+
+    let human: Box<dyn Human> = Box::new(Person {});
+    human.speak();
+}
+
+fn type_of<T>(_: T) -> &'static str {
+    std::any::type_name::<T>()
+}
