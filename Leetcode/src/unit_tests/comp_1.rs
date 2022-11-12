@@ -2,6 +2,33 @@ mod comp_1_tests {
     use crate::components::comp_1::*;
 
     #[test]
+    fn test_median_finder() {
+        let mut obj = MedianFinder::new();
+        obj.add_num(6);
+        assert_eq!(obj.find_median(), 6.0);
+        obj.add_num(10);
+        assert_eq!(obj.find_median(), 8.0);
+        obj.add_num(2);
+        assert_eq!(obj.find_median(), 6.0);
+        obj.add_num(6);
+        assert_eq!(obj.find_median(), 6.0);
+        obj.add_num(5);
+        assert_eq!(obj.find_median(), 6.0);
+        obj.add_num(0);
+        assert_eq!(obj.find_median(), 5.5);
+        obj.add_num(6);
+        assert_eq!(obj.find_median(), 6.0);
+        obj.add_num(3);
+        assert_eq!(obj.find_median(), 5.5);
+        obj.add_num(1);
+        assert_eq!(obj.find_median(), 5.0);
+        obj.add_num(0);
+        assert_eq!(obj.find_median(), 4.0);
+        obj.add_num(0);
+        assert_eq!(obj.find_median(), 3.0);
+    }
+
+    #[test]
     fn test_remove_vec_duplicates() {
         assert_eq!(remove_vec_duplicates(&mut vec![1, 1, 2]), 2);
         assert_eq!(
