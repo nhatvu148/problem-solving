@@ -3,5 +3,5 @@ use leetcode::components::comp::*;
 use leetcode::components::comp_1::*;
 
 fn main() {
-    refcell_example();
+    println!("{}", reverse_words(String::from("a good   example")));
 }

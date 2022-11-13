@@ -9,6 +9,10 @@ use std::{collections::HashMap, vec};
 #[path = "../unit_tests/comp_1.rs"]
 mod comp_1_tests;
 
+pub fn reverse_words(s: String) -> String {
+    s.split_whitespace().rev().collect::<Vec<_>>().join(" ")
+}
+
 #[derive(Default)]
 pub struct MedianFinder {
     data: Vec<i32>,

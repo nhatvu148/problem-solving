@@ -2,6 +2,22 @@ mod comp_1_tests {
     use crate::components::comp_1::*;
 
     #[test]
+    fn test_reverse_words() {
+        assert_eq!(
+            reverse_words(String::from("the sky is blue")),
+            String::from("blue is sky the")
+        );
+        assert_eq!(
+            reverse_words(String::from("  hello world  ")),
+            String::from("world hello")
+        );
+        assert_eq!(
+            reverse_words(String::from("a good   example")),
+            String::from("example good a")
+        );
+    }
+
+    #[test]
     fn test_median_finder() {
         let mut obj = MedianFinder::new();
         obj.add_num(6);
