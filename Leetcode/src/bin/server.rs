@@ -3,5 +3,5 @@ use leetcode::components::comp::*;
 use leetcode::components::comp_1::*;
 
 fn main() {
-    inheritance_example();
+    refcell_example();
 }
