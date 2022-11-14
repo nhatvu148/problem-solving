@@ -1,0 +1,9 @@
+[database]
+password = "hello"
+username = "vu"
+
+[google]
+api_key = "google_api_key"
+
+[jwt]
+secret_token = "secret"
