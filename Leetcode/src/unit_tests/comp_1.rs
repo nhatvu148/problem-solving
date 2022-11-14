@@ -2,6 +2,32 @@ mod comp_1_tests {
     use crate::components::comp_1::*;
 
     #[test]
+    fn test_remove_stones() {
+        assert_eq!(
+            remove_stones(vec![
+                vec![0, 0],
+                vec![0, 1],
+                vec![1, 0],
+                vec![1, 2],
+                vec![2, 1],
+                vec![2, 2]
+            ]),
+            5
+        );
+        assert_eq!(
+            remove_stones(vec![
+                vec![0, 0],
+                vec![0, 2],
+                vec![1, 1],
+                vec![2, 0],
+                vec![2, 2],
+            ]),
+            3
+        );
+        assert_eq!(remove_stones(vec![vec![0, 0],]), 0);
+    }
+
+    #[test]
     fn test_reverse_words() {
         assert_eq!(
             reverse_words(String::from("the sky is blue")),
