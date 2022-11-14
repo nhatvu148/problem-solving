@@ -48,7 +48,7 @@ impl Config {
             }
         }
 
-        let config_toml: ConfigToml = toml::from_str(&content).unwrap_or_else(|e| {
+        let config_toml: ConfigToml = toml::from_str(&content).unwrap_or_else(|_e| {
             println!("Failed to create ConfigToml Object out of config file.");
             ConfigToml {
                 database: None,
