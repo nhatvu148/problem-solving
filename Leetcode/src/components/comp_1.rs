@@ -10,6 +10,30 @@ use std::num::ParseIntError;
 #[path = "../unit_tests/comp_1.rs"]
 mod comp_1_tests;
 
+pub fn guess_number(n: i32) -> i32 {
+    let (mut low, mut high) = (1, n);
+    loop {
+        let mid = low + (high - low) / 2;
+        match guess(mid) {
+            0 => break mid,
+            -1 => high = mid - 1,
+            _ => low = mid + 1,
+        }
+    }
+}
+
+fn guess(num: i32) -> i32 {
+    if num > 1150769282 {
+        return -1;
+    }
+
+    if num < 1150769282 {
+        return 1;
+    }
+
+    0
+}
+
 pub fn remove_stones(stones: Vec<Vec<i32>>) -> i32 {
     let len_sts: usize = stones.len();
     let graph = build_graph(&stones);

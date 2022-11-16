@@ -2,6 +2,11 @@ mod comp_1_tests {
     use crate::components::comp_1::*;
 
     #[test]
+    fn test_guess_number() {
+        assert_eq!(guess_number(1420736637), 1150769282);
+    }
+
+    #[test]
     fn test_remove_stones() {
         assert_eq!(
             remove_stones(vec![
