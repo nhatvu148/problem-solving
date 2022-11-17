@@ -2,6 +2,12 @@ mod comp_1_tests {
     use crate::components::comp_1::*;
 
     #[test]
+    fn test_compute_area() {
+        assert_eq!(compute_area(-3, 0, 3, 4, 0, -1, 9, 2), 45);
+        assert_eq!(compute_area(-2, -2, 2, 2, -2, -2, 2, 2), 16);
+    }
+
+    #[test]
     fn test_guess_number() {
         assert_eq!(guess_number(1420736637), 1150769282);
     }

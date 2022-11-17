@@ -1,6 +1,8 @@
 #![allow(dead_code, unused_imports)]
 use libc::c_char;
 use serde::{Deserialize, Serialize};
+use std::cmp::max;
+use std::cmp::min;
 use std::collections::HashMap;
 use std::collections::HashSet;
 use std::ffi::CStr;
@@ -9,6 +11,20 @@ use std::num::ParseIntError;
 #[cfg(test)]
 #[path = "../unit_tests/comp_1.rs"]
 mod comp_1_tests;
+
+pub fn compute_area(
+    ax1: i32,
+    ay1: i32,
+    ax2: i32,
+    ay2: i32,
+    bx1: i32,
+    by1: i32,
+    bx2: i32,
+    by2: i32,
+) -> i32 {
+    let s = max(0, min(ax2, bx2) - max(ax1, bx1)) * max(0, min(ay2, by2) - max(ay1, by1));
+    (ax2 - ax1) * (ay2 - ay1) + (bx2 - bx1) * (by2 - by1) - s
+}
 
 pub fn guess_number(n: i32) -> i32 {
     let (mut low, mut high) = (1, n);
