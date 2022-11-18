@@ -12,6 +12,25 @@ use std::num::ParseIntError;
 #[path = "../unit_tests/comp_1.rs"]
 mod comp_1_tests;
 
+pub fn is_ugly(n: i32) -> bool {
+    let mut n = n;
+    if n < 1 {
+        return false;
+    }
+    while n > 1 {
+        if n % 2 == 0 {
+            n /= 2;
+        } else if n % 3 == 0 {
+            n /= 3;
+        } else if n % 5 == 0 {
+            n /= 5;
+        } else {
+            return false;
+        }
+    }
+    true
+}
+
 pub fn compute_area(
     ax1: i32,
     ay1: i32,

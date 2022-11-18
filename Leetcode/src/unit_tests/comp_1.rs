@@ -2,6 +2,13 @@ mod comp_1_tests {
     use crate::components::comp_1::*;
 
     #[test]
+    fn test_is_ugly() {
+        assert_eq!(is_ugly(6), true);
+        assert_eq!(is_ugly(1), true);
+        assert_eq!(is_ugly(14), false);
+    }
+
+    #[test]
     fn test_compute_area() {
         assert_eq!(compute_area(-3, 0, 3, 4, 0, -1, 9, 2), 45);
         assert_eq!(compute_area(-2, -2, 2, 2, -2, -2, 2, 2), 16);
