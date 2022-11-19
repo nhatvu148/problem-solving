@@ -2,6 +2,25 @@ mod comp_1_tests {
     use crate::components::comp_1::*;
 
     #[test]
+    fn test_outer_trees() {
+        assert_eq!(
+            outer_trees(vec![
+                vec![1, 1],
+                vec![2, 2],
+                vec![2, 0],
+                vec![2, 4],
+                vec![3, 3],
+                vec![4, 2],
+            ]),
+            vec![vec![1, 1], vec![2, 0], vec![4, 2], vec![3, 3], vec![2, 4],]
+        );
+        assert_eq!(
+            outer_trees(vec![vec![1, 2], vec![2, 2], vec![4, 2],]),
+            vec![vec![1, 2], vec![2, 2], vec![4, 2],]
+        );
+    }
+
+    #[test]
     fn test_is_ugly() {
         assert_eq!(is_ugly(6), true);
         assert_eq!(is_ugly(1), true);
