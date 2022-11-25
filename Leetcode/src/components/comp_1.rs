@@ -12,6 +12,30 @@ use std::num::ParseIntError;
 #[path = "../unit_tests/comp_1.rs"]
 mod comp_1_tests;
 
+pub fn sum_subarray_mins(mut arr: Vec<i32>) -> i32 {
+    let mut stk: Vec<usize> = Vec::new();
+    let mut ans: i64 = 0;
+    const MOD: i64 = 10_i64.pow(9) + 7;
+    let min_val: i32 = i32::MIN;
+    arr.push(min_val);
+
+    arr.iter().enumerate().for_each(|(i, x)| {
+        while !stk.is_empty() && arr[stk[stk.len() - 1]] > *x {
+            let top = stk.pop().unwrap();
+            let l = if stk.is_empty() {
+                top
+            } else {
+                (top - stk[stk.len() - 1] - 1)
+            };
+            let r = (i - top - 1);
+            let count = ((l + 1) * (r + 1)) as i64;
+            ans = (ans + (arr[top] as i64) * (count)) % MOD;
+        }
+        stk.push(i);
+    });
+    return ans as i32;
+}
+
 pub fn minus(a: &Vec<i32>, b: &Vec<i32>) -> Vec<i32> {
     vec![a[0] - b[0], a[1] - b[1]]
 }

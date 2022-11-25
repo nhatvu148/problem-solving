@@ -2,6 +2,12 @@ mod comp_1_tests {
     use crate::components::comp_1::*;
 
     #[test]
+    fn test_sum_subarray_mins() {
+        assert_eq!(sum_subarray_mins(vec![3,1,2,4]), 17);
+        assert_eq!(sum_subarray_mins(vec![11,81,94,43,3]), 444);
+    }
+
+    #[test]
     fn test_outer_trees() {
         assert_eq!(
             outer_trees(vec![
